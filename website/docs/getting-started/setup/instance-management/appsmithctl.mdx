@@ -47,9 +47,9 @@ To create a backup of the Appsmith instance, use the following command:
   ```bash
   appsmithctl backup
   ```
-  - The `backup` command creates a backup of your Appsmith instance, including the internal database, `docker.env`, and Git data. The backup file is encrypted using a password that you provided. This password is essential for restoring the backup later, so make sure to store it securely. If the password is forgotten, the backup cannot be restored.
+  - The `backup` command creates a backup of your Appsmith instance, including the internal database, `docker.env`, and Git data. Run interactively in a terminal, it prompts for a password and encrypts the backup file with it. This password is essential for restoring the backup later, so make sure to store it securely. If the password is forgotten, the backup cannot be restored.
   - The backup file is stored in the `/appsmith-stacks/data/backup/` directory within the container. On your local machine, it is accessible at `./stacks/data/backup/`.
-  - The backup file follows the naming pattern `appsmith-backup-DATE_AND_TIMESTAMP.tar.gz.enc`.
+  - The backup file follows the naming pattern `appsmith-backup-DATE_AND_TIMESTAMP.tar.gz.enc`. Run with `--non-interactive`, or without a terminal attached, the command skips the password prompt and writes an unencrypted `appsmith-backup-DATE_AND_TIMESTAMP.tar.gz` instead.
 
 For more information about creating an Appsmith instance backup, see [Backup Instance](/getting-started/setup/instance-management/backup-and-restore/backup-instance) guide.
 </dd>
@@ -90,9 +90,10 @@ For [Appsmith paid plans](https://www.appsmith.com/pricing), backups can be uplo
   ```bash
   appsmithctl restore
   ```
-- The `restore` command restores the Appsmith instance, including the internal database, `docker.env`, and Git data, from an encrypted backup file. You will need the password used during the backup process to decrypt the backup. Without this password, the restore process will fail.
+- The `restore` command restores the Appsmith instance, including the internal database, `docker.env`, and Git data. For encrypted backups, you need the password used during the backup process to decrypt the archive.
   - The restore process assumes that the backup file is located at `/appsmith-stacks/data/backup/` within the container.
-  - The backup file should follow the naming pattern `appsmith-backup-DATE_AND_TIMESTAMP.tar.gz.enc`.
+  - The backup file should follow the naming pattern `appsmith-backup-DATE_AND_TIMESTAMP.tar.gz.enc` for encrypted archives, or `appsmith-backup-DATE_AND_TIMESTAMP.tar.gz` for unencrypted archives.
+  - From Appsmith v2.4.1, the `--backup-file`, `--non-interactive`, and `--force` options run a restore without prompts. For more information, see [Automate restores](/getting-started/setup/instance-management/backup-and-restore/restore-instance#automate-restores).
 
 For more information about restoring an Appsmith instance, see [Restore Instance](/getting-started/setup/instance-management/backup-and-restore/restore-instance) guide.
 </dd>
